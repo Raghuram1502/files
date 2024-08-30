@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>files</title>
+    <link rel="stylesheet" href="{{ url_for('static',filename='css/index.css') }}">
+</head>
+<body>
+    <ul>
+        <li>{{file.filename}}</li>
+        <li>{{file.nanoid}}</li>
+        <li>{{file.views}}</li>
+        <li><a href={{link}}>Download</a></li>
+    </ul>
+</body>
+</html>

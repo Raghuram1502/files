@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload</title>
+</head>
+<style>
+    body{
+        background-image:url('static/img/6213634.jpg') ;
+        background-size: cover;
+        background-repeat: no-repeat;
+    }
+    h1{
+        text-decoration: solid;
+    }
+    
+</style>
+<body>
+    <center>
+    <h1>Upload Your Files</h1>
+
+    <form action="/upload" method="post" enctype="multipart/form-data">
+        <input type="file" name="file">
+        <input type="submit" value="upload">
+    </form>
+    </center>
+    
+</body>
+</html>
