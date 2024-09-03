@@ -33,10 +33,10 @@ class File(db.Model):
     nanoid = mapped_column(String(50),unique=True,nullable=False)
     views = mapped_column(Integer,default=0)
     created_time = mapped_column(DateTime,default=datetime.now(d.UTC))
-    expire_time = mapped_column(DateTime, default=lambda: datetime.now(timezone.utc)+ timedelta(hours=1))
+    expire_time = mapped_column(DateTime)
 
     def has_expired(self):
-        return datetime.now(timezone.utc) < self.expire_time
+        return datetime.now(timezone.utc) > self.expire_time
 
 with app.app_context():
     db.create_all()
@@ -66,7 +66,9 @@ def upload():
             nanoid = generate(size=10)
             extension = filename.rsplit(".")[1]
             file.save(os.path.join(f"{app.config['UPLOAD']}/{nanoid}.{extension}"))
-            new_file = File(filename=filename,nanoid=nanoid)
+
+            new_file = File(filename=filename,nanoid=nanoid, expire_time=datetime.now() + timedelta(hours=2))
+            print("setting expiry ", new_file.expire_time)
             db.session.add(new_file)
             db.session.commit()
             return redirect(f"/{nanoid}")
@@ -85,9 +87,12 @@ def get_file(nanoid):
     db.session.commit()
     filename = file.filename
     extension = filename.rsplit(".")[1]
+    print(str(file.expire_time),str(datetime.now(timezone.utc)))
     #print(exp.timestamp(),curr)
-    #exp = datetime.fromtimestamp(exp.timestamp(), tz=timezone.utc)
-    if not file.has_expired:
+    # exp = datetime.fromtimestamp(exp.timestamp(), tz=timezone.utc)
+    print(file.expire_time)
+
+    if datetime.now() > file.expire_time:
         os.remove(f"uploads/{nanoid}.{extension}")
         db.session.delete(file)
         db.session.commit()

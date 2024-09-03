@@ -7,11 +7,11 @@
     <link rel="stylesheet" href="{{ url_for('static',filename='css/index.css') }}">
 </head>
 <body>
-    <ul>
-        <li>{{file.filename}}</li>
-        <li>{{file.nanoid}}</li>
-        <li>{{file.views}}</li>
-        <li><a href={{link}}>Download</a></li>
-    </ul>
+    <div id="file_container">
+        <p>Filename : {{file.filename}}</p>
+        <p>NanoID : {{file.nanoid}}</p>
+        <p>Views : {{file.views}}</p>
+        <p><a href={{link}}>Download</a></p>
+    </div>
 </body>
 </html>
